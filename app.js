@@ -27,17 +27,30 @@ let currentNote = null
 
 async function loadNotes(){
 
-const { data } = await supabase
+const { data: { user } } = await supabase.auth.getUser()
+
+if(!user){
+console.log("User not logged in")
+return
+}
+
+const { data, error } = await supabase
 .from("notes")
 .select("*")
+.eq("user_id", user.id)
 .order("updated_at",{ascending:false})
 
+if(error){
+console.error(error)
+return
+}
+
 const list = document.getElementById("notesList")
-list.innerHTML = ""
+list.innerHTML=""
 
 data.forEach(note=>{
 
-const div = document.createElement("div")
+const div=document.createElement("div")
 div.className="noteCard"
 div.innerText=note.title
 
@@ -60,10 +73,15 @@ document.getElementById("noteContent").value = note.content
 
 async function saveNote(){
 
-const user = await getUser()
+const { data: { user } } = await supabase.auth.getUser()
 
-const title = document.getElementById("noteTitle").value
-const content = document.getElementById("noteContent").value
+if(!user){
+alert("Login required")
+return
+}
+
+const title=document.getElementById("noteTitle").value
+const content=document.getElementById("noteContent").value
 
 if(currentNote){
 
@@ -88,6 +106,10 @@ user_id:user.id
 
 }
 
+showSavedPopup()
+loadNotes()
+
+}
 showSavedPopup()
 function showSavedPopup(){
 

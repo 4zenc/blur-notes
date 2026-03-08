@@ -1,5 +1,28 @@
 import { supabase } from "./supabase.js"
 
+async function signIn() {
+
+const { data, error } = await supabase.auth.signInWithOtp({
+email: prompt("Enter email to login")
+})
+
+if(error){
+alert(error.message)
+}
+
+}
+
+async function getUser(){
+
+const { data } = await supabase.auth.getUser()
+
+return data.user
+
+}
+
+signIn()
+import { supabase } from "./supabase.js"
+
 let currentNote = null
 
 async function loadNotes(){

@@ -71,3 +71,27 @@ background:rgba(255,255,255,0.05);
 border-radius:10px;
 cursor:pointer;
 }
+
+.popup{
+
+position:fixed;
+bottom:40px;
+right:40px;
+
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(20px);
+
+padding:15px 25px;
+
+border-radius:20px;
+
+opacity:0;
+transition:0.3s;
+
+}
+
+.popup.show{
+
+opacity:1;
+
+}

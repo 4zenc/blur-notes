@@ -89,6 +89,17 @@ user_id:user.id
 }
 
 showSavedPopup()
+function showSavedPopup(){
+
+const popup = document.getElementById("savePopup")
+
+popup.classList.add("show")
+
+setTimeout(()=>{
+popup.classList.remove("show")
+},2000)
+
+}
 
 loadNotes()
 

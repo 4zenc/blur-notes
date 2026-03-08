@@ -60,6 +60,8 @@ document.getElementById("noteContent").value = note.content
 
 async function saveNote(){
 
+const user = await getUser()
+
 const title = document.getElementById("noteTitle").value
 const content = document.getElementById("noteContent").value
 
@@ -80,21 +82,14 @@ await supabase
 .from("notes")
 .insert({
 title,
-content
+content,
+user_id:user.id
 })
 
 }
 
+showSavedPopup()
+
 loadNotes()
 
 }
-
-document.getElementById("saveNote").onclick = saveNote
-
-document.getElementById("newNote").onclick = ()=>{
-currentNote=null
-document.getElementById("noteTitle").value=""
-document.getElementById("noteContent").value=""
-}
-
-loadNotes()
